@@ -3,11 +3,11 @@ var UI = require('ui');
 var ajax = require('ajax');
 var issueList = require('issue_list');
 
-var showProjects = function(projects) {
+var showProjects = function(memberships) {
 	
 	var itemArr = [];
-	for(var i = 0; i < projects.length; i++) {
-		var current = projects[i];
+	for(var i = 0; i < memberships.length; i++) {
+		var current = memberships[i].project;
 		itemArr.push({
 			title: current.name
 //			subtitle: current.description
@@ -16,13 +16,13 @@ var showProjects = function(projects) {
   
   var menu = new UI.Menu({
     sections: [{
-      title:  "Projekte ("+projects.length+")",
+      title:  "Projekte ("+memberships.length+")",
       items: itemArr
     }]
   });
 	
   menu.on('select', function(e) {
-    var project = projects[e.itemIndex];
+    var project = memberships[e.itemIndex].project;
     console.log('Selected Project: '+project.name);
     showIssues(project);    
 
@@ -34,8 +34,8 @@ var showProjects = function(projects) {
 
 function showIssues(project) {
 	
-  var url = appConfiguration.rest.base_redmine_url + "projects/" + project.id+"/issues.json";
-  
+  var url = appConfiguration.rest.base_redmine_url + "projects/" + project.id+"/issues.json?key="+appConfiguration.rest.redmine_api_key;
+	console.log("Try to load..:"+url);
   ajax(
 	{
     url: url,
@@ -47,7 +47,7 @@ function showIssues(project) {
   },
   function(error) {
     // Failure!
-    console.log('Failed fetching weather data: ' + error);
+    console.log('Failed loading project issues: ' + error);
   });	
 }
 
