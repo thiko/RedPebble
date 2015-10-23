@@ -17,8 +17,8 @@ var projectList = require('project_list');
 
 appConfiguration = {
 	rest: {		
-		redmine_api_key: "6b016a1717cb7e1b49bf01e8b9d8c213a414df4e ", //"ac97df6229a509b799933f9215f776494d96159b", <- fuer wkg redmine
-		base_redmine_url: "https://www.hostedredmine.com/", //"https://redmine.wkg-software.de:55430/";
+		redmine_api_key: "YOUR_API_KEY",
+		base_redmine_url: "", //example: https://www.hostedredmine.com/
 		request_projects_url_part: "projects.json",
 		request_current_user_url_part: "users/current.json",
 		request_membership_parameter: "memberships",
