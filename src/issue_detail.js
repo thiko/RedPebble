@@ -1,5 +1,6 @@
 /* global module */
 var UI = require('ui');
+var ajax = require('ajax');
 
 var start = null;
 
@@ -31,7 +32,8 @@ var showIssueDetails = function(issue) {
 			var duration = end.getTime()-start.getTime();			
 //			detailCard.body();
 			Pebble.showSimpleNotificationOnPebble("Task time:", "Saved "+getHumanReadableTimeString(duration)+ " on issue #"+issue.id+" "+issue.subject);
-
+			//Request is not correct 
+			//TODO: saveTimeToWorkItem(issue.id, duration);
 			start = null;
 			localStorage.removeItem(buildCurrentWorkItemId(issue));
 		} else {
@@ -50,6 +52,25 @@ var showIssueDetails = function(issue) {
 	
 };
 
+function saveTimeToWorkItem(id, duration){
+	var url = appConfiguration.rest.base_redmine_url+"/time_entries.json"+"?"+appConfiguration.rest.request_key_parameter+appConfiguration.rest.redmine_api_key;
+	console.log("URL: "+url);
+	ajax(
+	{
+    url: url,
+    type: 'json',
+		method:'post',
+		data: {
+			issue_id: id,
+			hours: 2,
+			activity_id:9
+		}
+  },function(data){
+		console.log("Saving time successfull");
+	}, function(error){
+		console.log("Error saving time: "+error);
+	});
+}
 
 // store the given start date in localStorage.
 // the key were created by concatinate the global current_work_item_data_key with the id of given issue.

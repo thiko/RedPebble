@@ -17,7 +17,7 @@ var projectList = require('project_list');
 
 appConfiguration = {
 	rest: {		
-		redmine_api_key: "YOUR_API_KEY",
+		redmine_api_key: "YOUR_KEY",
 		base_redmine_url: "https://www.hostedredmine.com/", //example: https://www.hostedredmine.com/
 		request_projects_url_part: "projects.json",
 		request_current_user_url_part: "users/current.json",
